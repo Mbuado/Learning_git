@@ -1,0 +1,53 @@
+{
+  "Version": "2017-10-01",
+  "StartAction": "msgWelcome",
+  "Actions": {
+    "msgWelcome": {
+      "Type": "Message",
+      "Parameters": {
+        "Text": "Welcome to our store! Press 1 for store hours, 2 for order tracking, or 3 to speak to an agent."
+      },
+      "Transitions": {
+        "NextAction": "getInputMenu"
+      }
+    },
+    "getInputMenu": {
+      "Type": "GetUserInput",
+      "Parameters": {
+        "MenuOptions": [
+          {"Key": "1", "Action": "storeHours"},
+          {"Key": "2", "Action": "orderTracking"},
+          {"Key": "3", "Action": "liveAgent"}
+        ]
+      }
+    },
+    "storeHours": {
+      "Type": "Message",
+      "Parameters": {
+        "Text": "Our store hours are Monday to Friday, 9 AM to 8 PM."
+      },
+      "Transitions": {
+        "NextAction": "Disconnect"
+      }
+    },
+    "orderTracking": {
+      "Type": "LexBot",
+      "Parameters": {
+        "BotAlias": "RetailBot",
+        "BotName": "OrderTrackingBot"
+      },
+      "Transitions": {
+        "NextAction": "Disconnect"
+      }
+    },
+    "liveAgent": {
+      "Type": "TransferToQueue",
+      "Parameters": {
+        "Queue": "CustomerServiceQueue"
+      },
+      "Transitions": {
+        "NextAction": "Disconnect"
+      }
+    }
+  }
+}
